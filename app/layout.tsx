@@ -1,4 +1,5 @@
 import React, { ReactNode } from 'react';
+import '@/app/globals.css';
 
 export default function Layout({ children }: { children: ReactNode }) {
   return (
@@ -6,7 +7,7 @@ export default function Layout({ children }: { children: ReactNode }) {
       <head>
         <title>Next.js</title>
       </head>
-      <body>{children}</body>
+      <body className="py-7 px-48 text-red-100 font-bold bg-green-200">{children}</body>
     </html>
   );
 }
