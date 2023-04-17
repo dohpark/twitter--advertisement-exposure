@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react';
-import '@/app/globals.css';
+import '@/styles/globals.css';
 
 export default function Layout({ children }: { children: ReactNode }) {
   return (
