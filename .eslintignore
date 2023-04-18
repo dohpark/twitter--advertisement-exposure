@@ -1,4 +1,12 @@
+# next
 next.config.js
+
+# eslint
 .eslintrc.js
+
+# tailwind
 tailwind.config.js
 postcss.config.js
+
+# prisma
+/prisma-client

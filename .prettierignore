@@ -1,5 +1,13 @@
+# vscode
+/.vscode
+
+# next
 /.next
+
+# yarn
 .pnp.cjs
 .pnp.loader.mjs
-/.vscode
 /.yarn
+
+# prisma
+/prisma-client
