@@ -1,8 +1,12 @@
+import TopNav from '@/components/TopNav';
+import BottomNav from '@/components/Nav';
+
 export default function Page() {
   return (
-    <h1 className="">
-      Hello, Next.js!Hello, Next.js!Hello, Next.js!Hello, Next.js!Hello, Next.js!Hello, Next.js!Hello, Next.js! Hello,
-      Next.js! Hello, Next.js! Hello, Next.js! Hello, Next.js! Hello, Next.js! Hello, Next.js! Hello, Next.js!
-    </h1>
+    <div className="flex flex-col	h-full divide-y divide-gray-200">
+      <TopNav />
+      <main className="grow">dfsdfsdfsdfdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfs</main>
+      <BottomNav />
+    </div>
   );
 }

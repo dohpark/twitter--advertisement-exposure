@@ -15,7 +15,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en">
       <body>
-        <div className="h-screen w-screen flex">
+        <div className="flex">
           <div className="h-screen w-screen xs:w-0 relative">
             <Image
               src={TwitterIcon}
@@ -25,7 +25,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
               className="absolute m-auto inset-0"
             />
           </div>
-          <div className="max-w-40 bg-red-400 h-screen">{children}</div>
+          <div className="max-w-40 h-screen w-full border border-gray-200">{children}</div>
         </div>
       </body>
     </html>
