@@ -5,3 +5,7 @@
 .markdown > * {
   all: revert;
 }
+
+.markdown > *:first-child {
+  margin-top: 0px;
+}

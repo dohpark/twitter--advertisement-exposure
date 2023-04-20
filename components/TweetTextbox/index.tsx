@@ -4,17 +4,35 @@ import { useState } from 'react';
 import MarkdownBox from './MarkdownBox';
 
 function TweetTextbox() {
+  const [userId, setUserId] = useState('');
+  const [password, setPassword] = useState('');
   const [isWrite, setIsWrite] = useState(true);
   const [tweetContent, setTweetContent] = useState('');
 
   const handleSetWriteFalse = () => setIsWrite(false);
   const handleSetWriteTrue = () => setIsWrite(true);
+  const handleSetUserId = (e: React.ChangeEvent<HTMLInputElement>) => setUserId(e.target.value);
+  const handleSetPassword = (e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value);
   const handleSetTweetContent = (e: React.ChangeEvent<HTMLTextAreaElement>) => setTweetContent(e.target.value);
 
   return (
     <section className="max-h-full">
-      <input type="text" placeholder="id를 입력해주세요" />
-      <input type="text" placeholder="비밀번호를 설정해주세요" />
+      <div className="flex m-3">
+        <input
+          type="text"
+          placeholder="닉네임"
+          onChange={handleSetUserId}
+          value={userId}
+          className="border rounded-md border-gray-200 mr-3 px-2 py-1 w-1/2"
+        />
+        <input
+          type="password"
+          placeholder="비밀번호"
+          onChange={handleSetPassword}
+          value={password}
+          className="border rounded-md border-gray-200 mr-3 px-2 py-1 w-1/2"
+        />
+      </div>
       <div className="flex mx-3 border-b border-gray-200">
         <button
           type="button"
