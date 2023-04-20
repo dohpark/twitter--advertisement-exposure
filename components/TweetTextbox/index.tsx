@@ -9,6 +9,7 @@ function TweetTextbox() {
   const handleSetWriteFalse = () => setIsWrite(false);
   const handleSetWriteTrue = () => setIsWrite(true);
   const handleSetTweetContent = (e: React.ChangeEvent<HTMLTextAreaElement>) => setTweetContent(e.target.value);
+
   return (
     <section>
       <input type="text" placeholder="id를 입력해주세요" />
@@ -17,22 +18,18 @@ function TweetTextbox() {
         <button
           type="button"
           onClick={handleSetWriteTrue}
-          className={
-            isWrite
-              ? 'px-4 py-2 text-sm border border-gray-200 border-b-white rounded-t-md mr-2 -mb-[1px]'
-              : 'px-4 py-2 text-sm border border-transparent rounded-t-md mr-2 -mb-[1px]'
-          }
+          className={`px-4 py-2 text-sm border rounded-t-md mr-2 -mb-[1px] ${
+            isWrite ? 'border-gray-200 border-b-white' : 'border-transparent'
+          }`}
         >
           Write
         </button>
         <button
           type="button"
           onClick={handleSetWriteFalse}
-          className={
-            !isWrite
-              ? 'px-4 py-2 text-sm border border-gray-200 border-b-white rounded-t-md mr-2 -mb-[1px]'
-              : 'px-4 py-2 text-sm border border-transparent rounded-t-md mr-2 -mb-[1px]'
-          }
+          className={`px-4 py-2 text-sm border rounded-t-md mr-2 -mb-[1px] ${
+            !isWrite ? 'border-gray-200 border-b-white' : 'border-transparent'
+          }`}
         >
           Preview
         </button>
