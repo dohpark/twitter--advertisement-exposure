@@ -1,8 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
+import MarkdownBox from './MarkdownBox';
 
 function TweetTextbox() {
   const [isWrite, setIsWrite] = useState(true);
@@ -13,7 +12,7 @@ function TweetTextbox() {
   const handleSetTweetContent = (e: React.ChangeEvent<HTMLTextAreaElement>) => setTweetContent(e.target.value);
 
   return (
-    <section className="h-full">
+    <section className="max-h-full">
       <input type="text" placeholder="id를 입력해주세요" />
       <input type="text" placeholder="비밀번호를 설정해주세요" />
       <div className="flex mx-3 border-b border-gray-200">
@@ -40,14 +39,12 @@ function TweetTextbox() {
         {isWrite ? (
           <textarea
             placeholder="무슨 일이 일어나고 있나요?"
-            className="w-full p-2 h-52"
+            className="w-full p-2 h-96"
             onChange={handleSetTweetContent}
             value={tweetContent}
           />
         ) : (
-          <ReactMarkdown remarkPlugins={[remarkGfm]} className="w-full p-2 h-fit markdown">
-            {tweetContent}
-          </ReactMarkdown>
+          <MarkdownBox value={tweetContent} />
         )}
       </div>
     </section>
