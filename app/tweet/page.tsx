@@ -1,12 +1,9 @@
-import TweetHeader from '@/components/TweetHeader';
-import TweetTextbox from '@/components/TweetTextbox';
+import Tweet from '@/components/Tweet';
 
 export default function Page() {
   return (
     <div className="h-full">
-      <TweetHeader />
-      <TweetTextbox />
-      {/* <Tabs /> */}
+      <Tweet />
     </div>
   );
 }
