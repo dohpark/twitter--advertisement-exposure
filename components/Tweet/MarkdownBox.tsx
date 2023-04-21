@@ -1,6 +1,7 @@
 /* eslint-disable react/no-children-prop */
 /* eslint-disable react/no-unstable-nested-components */
 
+import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
@@ -31,6 +32,25 @@ function MarkdownBox({ value }: MarkdownBoxProps) {
               {children}
             </code>
           );
+        },
+        p: (paragraph) => {
+          const element = paragraph.children[0] as string;
+          const arr: ['p' | 'a', Object, string][] = element.split(' ').map((el) => {
+            if (el.startsWith('@')) {
+              const username = el.slice(1, el.length);
+              return ['a', { href: `/${username}` }, `${el} `];
+            }
+            return ['p', {}, `${el} `];
+          });
+
+          type ArrayOfReactElAndStringType = React.ReactElement | string;
+          const newArr: ArrayOfReactElAndStringType[] = [];
+          arr.forEach(([el, options, v]) => {
+            if (el === 'a') newArr.push(React.createElement(el, options, v));
+            else newArr.push(v);
+          });
+
+          return React.createElement('p', {}, ...newArr);
         },
       }}
     >

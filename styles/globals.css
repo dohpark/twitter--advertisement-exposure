@@ -9,3 +9,16 @@
 .markdown > *:first-child {
   margin-top: 0px;
 }
+
+.markdown ul {
+  padding-left: 2rem;
+}
+
+.markdown ul > .task-list-item {
+  list-style: none;
+  margin-left: -20px;
+}
+
+.markdown a {
+  color: #1d9bf0;
+}
