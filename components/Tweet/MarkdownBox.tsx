@@ -33,9 +33,12 @@ function MarkdownBox({ value }: MarkdownBoxProps) {
             </code>
           );
         },
-        p: (paragraph) => {
-          const element = paragraph.children[0] as string;
-          const arr: ['p' | 'a', Object, string][] = element.split(' ').map((el) => {
+        p: (p) => {
+          const paragraph = p.children[0] as string;
+
+          type ParagraphAndATagType = 'p' | 'a';
+          type OptionType = { href?: string };
+          const wordArray: [ParagraphAndATagType, OptionType, string][] = paragraph.split(' ').map((el) => {
             if (el.startsWith('@')) {
               const username = el.slice(1, el.length);
               return ['a', { href: `/${username}` }, `${el} `];
@@ -43,14 +46,14 @@ function MarkdownBox({ value }: MarkdownBoxProps) {
             return ['p', {}, `${el} `];
           });
 
-          type ArrayOfReactElAndStringType = React.ReactElement | string;
-          const newArr: ArrayOfReactElAndStringType[] = [];
-          arr.forEach(([el, options, v]) => {
-            if (el === 'a') newArr.push(React.createElement(el, options, v));
-            else newArr.push(v);
+          type ReactElAndStringType = React.ReactElement | string;
+          const createReactElArgArray: ReactElAndStringType[] = [];
+          wordArray.forEach(([el, options, v]) => {
+            if (el === 'a') createReactElArgArray.push(React.createElement(el, options, v));
+            else createReactElArgArray.push(v);
           });
 
-          return React.createElement('p', {}, ...newArr);
+          return React.createElement('p', {}, ...createReactElArgArray);
         },
       }}
     >
