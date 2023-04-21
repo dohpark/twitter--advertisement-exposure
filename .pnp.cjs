@@ -30,6 +30,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@next/eslint-plugin-next", "npm:13.3.0"],\
             ["@prisma/client", "virtual:eb59264bfbc38325e2fe43e21e38257e35ab8b2542a90528909336318b47293b33ee616cd4b488d67a60da550d954e6d38ccd8ef8e01a2e05885df3bb01794f4#npm:4.12.0"],\
+            ["@prisma/nextjs-monorepo-workaround-plugin", "npm:4.13.0"],\
             ["@types/node", "npm:18.15.11"],\
             ["@types/react", "npm:18.0.34"],\
             ["@types/react-dom", "npm:18.0.11"],\
@@ -444,6 +445,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@prisma-engines-version-npm-4.12.0-67.659ef412370fa3b41cd7bf6e94587c1dfb7f67e7-2a63dc3d51-54615d6982.zip/node_modules/@prisma/engines-version/",\
           "packageDependencies": [\
             ["@prisma/engines-version", "npm:4.12.0-67.659ef412370fa3b41cd7bf6e94587c1dfb7f67e7"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@prisma/nextjs-monorepo-workaround-plugin", [\
+        ["npm:4.13.0", {\
+          "packageLocation": "./.yarn/cache/@prisma-nextjs-monorepo-workaround-plugin-npm-4.13.0-96fab0008b-e1bb090e36.zip/node_modules/@prisma/nextjs-monorepo-workaround-plugin/",\
+          "packageDependencies": [\
+            ["@prisma/nextjs-monorepo-workaround-plugin", "npm:4.13.0"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -6660,6 +6670,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["twitter-advertisement-exposure", "workspace:."],\
             ["@next/eslint-plugin-next", "npm:13.3.0"],\
             ["@prisma/client", "virtual:eb59264bfbc38325e2fe43e21e38257e35ab8b2542a90528909336318b47293b33ee616cd4b488d67a60da550d954e6d38ccd8ef8e01a2e05885df3bb01794f4#npm:4.12.0"],\
+            ["@prisma/nextjs-monorepo-workaround-plugin", "npm:4.13.0"],\
             ["@types/node", "npm:18.15.11"],\
             ["@types/react", "npm:18.0.34"],\
             ["@types/react-dom", "npm:18.0.11"],\

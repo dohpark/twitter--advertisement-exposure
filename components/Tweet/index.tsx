@@ -1,5 +1,6 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import Image from 'next/image';
 import Arrow from '@/public/icons/arrow.svg';
@@ -7,16 +8,37 @@ import Link from 'next/link';
 import MarkdownBox from './MarkdownBox';
 
 function Tweet() {
-  const [userId, setUserId] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [isWrite, setIsWrite] = useState(true);
-  const [tweetContent, setTweetContent] = useState('');
+  const [content, setContent] = useState('');
+
+  const router = useRouter();
 
   const handleSetWriteFalse = () => setIsWrite(false);
   const handleSetWriteTrue = () => setIsWrite(true);
-  const handleSetUserId = (e: React.ChangeEvent<HTMLInputElement>) => setUserId(e.target.value);
+  const handleSetUserId = (e: React.ChangeEvent<HTMLInputElement>) => setUsername(e.target.value);
   const handleSetPassword = (e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value);
-  const handleSetTweetContent = (e: React.ChangeEvent<HTMLTextAreaElement>) => setTweetContent(e.target.value);
+  const handleSetTweetContent = (e: React.ChangeEvent<HTMLTextAreaElement>) => setContent(e.target.value);
+  const handleCreateTweet = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+
+    const data = await fetch('/api/post', {
+      method: 'POST',
+      body: JSON.stringify({
+        username,
+        password,
+        content,
+      }),
+    });
+    const res = await data.json();
+
+    if (res.status === 200) {
+      router.push('/');
+    } else if (res.status === 500) {
+      alert(res.message);
+    }
+  };
 
   return (
     <>
@@ -24,7 +46,11 @@ function Tweet() {
         <Link href="/">
           <Image src={Arrow} height={24} width={24} alt="Back to Home" className="my-auto" />
         </Link>
-        <button type="button" className="bg-sky-500 px-3 py-1 rounded-3xl text-white text-sm active:bg-sky-600">
+        <button
+          type="button"
+          onClick={handleCreateTweet}
+          className="bg-sky-500 px-3 py-1 rounded-3xl text-white text-sm active:bg-sky-600"
+        >
           트윗하기
         </button>
       </div>
@@ -34,7 +60,7 @@ function Tweet() {
             type="text"
             placeholder="닉네임"
             onChange={handleSetUserId}
-            value={userId}
+            value={username}
             className="border rounded-md border-gray-200 mr-3 px-2 py-1 w-1/2"
           />
           <input
@@ -71,10 +97,10 @@ function Tweet() {
               placeholder="무슨 일이 일어나고 있나요?"
               className="w-full p-2 h-96"
               onChange={handleSetTweetContent}
-              value={tweetContent}
+              value={content}
             />
           ) : (
-            <MarkdownBox value={tweetContent} />
+            <MarkdownBox value={content} />
           )}
         </div>
       </section>
