@@ -2,7 +2,7 @@ import '@/styles/globals.css';
 import Image from 'next/image';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import TwitterIcon from '@/public/icons/twitter-icon.svg';
-import Providers from './providers';
+import Providers from '@/app/providers';
 
 export const metadata = {
   title: 'Next.js',

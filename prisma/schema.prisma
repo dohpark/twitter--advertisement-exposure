@@ -16,5 +16,5 @@ model Post {
   username    String
   password    String
   content     String    @db.Text
-  created_at  DateTime  @default(now())
+  createdAt  DateTime  @default(now())
 }

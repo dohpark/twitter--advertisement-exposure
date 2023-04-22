@@ -22,3 +22,8 @@
 .markdown a {
   color: #1d9bf0;
 }
+
+.markdown code {
+  font-size: 0.875rem !important; /* 14px */
+  line-height: 1.25rem !important; /* 20px */
+}
