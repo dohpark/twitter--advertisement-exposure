@@ -3,29 +3,27 @@ import prisma from '@/prisma/client';
 
 export async function GET(req: Request) {
   try {
+    const TAKE = 8;
+
     const rawParams = req.url.split('?')[1];
     const cursor = +rawParams.split('=')[1];
 
-    const feedList =
-      cursor === 0
-        ? await prisma.post.findMany({
-            take: 5,
-            orderBy: {
-              id: 'desc',
-            },
-          })
-        : await prisma.post.findMany({
-            take: 3,
-            orderBy: {
-              id: 'desc',
-            },
-            cursor: {
-              id: cursor,
-            },
-          });
+    const pageCondition = {
+      skip: 1,
+      cursor: {
+        id: cursor,
+      },
+    };
 
-    const lastFeedInResults = feedList[4];
-    const lastCursor = lastFeedInResults.id;
+    const feedList = await prisma.post.findMany({
+      take: TAKE,
+      orderBy: {
+        id: 'desc',
+      },
+      ...(cursor !== 0 && pageCondition),
+    });
+
+    const lastCursor = feedList.at(-1)?.id;
 
     return NextResponse.json({ feedList, lastCursor });
   } catch (e) {

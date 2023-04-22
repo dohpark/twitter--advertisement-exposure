@@ -2,6 +2,7 @@
 
 import { useInfiniteQuery } from '@tanstack/react-query';
 import Card from '@/components/Card';
+import { useEffect, useRef } from 'react';
 
 interface FeedItems {
   id: number;
@@ -26,21 +27,34 @@ function Feeds() {
 
   const fetchFeeds = (cursor: string): Promise<FeedList> => getFeedLists(cursor);
 
-  const { data, isSuccess } = useInfiniteQuery({
+  const { data, isSuccess, fetchNextPage } = useInfiniteQuery({
     queryKey: ['feedList'],
     queryFn: ({ pageParam = 0 }) => fetchFeeds(pageParam),
     getNextPageParam: (lastItem) => lastItem.lastCursor,
     retry: 2,
   });
 
+  const intersectionObserver = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) fetchNextPage();
+    });
+
+    if (intersectionObserver.current) observer.observe(intersectionObserver.current);
+
+    return () => observer.disconnect();
+  }, [intersectionObserver, fetchNextPage]);
+
   return (
-    <main className="grow divide-y divide-gray-200">
+    <main className="overflow-y-scroll grow divide-y divide-gray-200">
       {isSuccess &&
         data.pages.map((page) =>
-          page.feedList.map(({ username, content, createdAt }) => (
-            <Card username={username} content={content} createdAt={createdAt} />
+          page.feedList.map(({ id, username, content, createdAt }) => (
+            <Card key={id} username={username} content={content} createdAt={createdAt} />
           ))
         )}
+      <div ref={intersectionObserver} />
     </main>
   );
 }

@@ -27,7 +27,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
               className="absolute m-auto inset-0"
             />
           </div>
-          <div className="max-w-40 min-h-screen w-full border border-gray-200">
+          <div className="max-w-40 max-h-screen w-full border border-gray-200">
             <Providers>
               {children}
               <ReactQueryDevtools initialIsOpen={false} />
