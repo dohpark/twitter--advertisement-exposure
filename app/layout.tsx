@@ -1,6 +1,8 @@
 import '@/styles/globals.css';
 import Image from 'next/image';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import TwitterIcon from '@/public/icons/twitter-icon.svg';
+import Providers from './providers';
 
 export const metadata = {
   title: 'Next.js',
@@ -25,7 +27,12 @@ export default function RootLayout({ children }: RootLayoutProps) {
               className="absolute m-auto inset-0"
             />
           </div>
-          <div className="max-w-40 min-h-screen w-full border border-gray-200">{children}</div>
+          <div className="max-w-40 min-h-screen w-full border border-gray-200">
+            <Providers>
+              {children}
+              <ReactQueryDevtools initialIsOpen={false} />
+            </Providers>
+          </div>
         </div>
       </body>
     </html>
