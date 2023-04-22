@@ -5,7 +5,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 import Arrow from '@/public/icons/arrow.svg';
 import Link from 'next/link';
-import MarkdownBox from './MarkdownBox';
+import MarkdownBox from '@/components/MarkdownBox';
 
 function Tweet() {
   const [username, setUsername] = useState('');
@@ -44,7 +44,7 @@ function Tweet() {
     <>
       <div className="flex justify-between p-3">
         <Link href="/">
-          <Image src={Arrow} height={24} width={24} alt="Back to Home" className="my-auto" />
+          <Image src={Arrow} height={20} width={20} alt="Back to Home" className="h-full" />
         </Link>
         <button
           type="button"
