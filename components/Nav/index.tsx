@@ -10,7 +10,7 @@ function Nav() {
       <Link href="/">
         <Image src={HomeIcon} height={24} width={24} alt="Back to Home" className="mx-auto my-3" />
       </Link>
-      <Link href="/user">
+      <Link href="/explore">
         <Image src={UserIcon} height={24} width={24} alt="Check users" className="mx-auto my-3" />
       </Link>
       <Link href="/tweet">
