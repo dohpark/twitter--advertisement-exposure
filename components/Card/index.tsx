@@ -13,7 +13,7 @@ interface CardProps {
 }
 
 function Card({ username, createdAt, content }: CardProps) {
-  const userPage = `/${username}`;
+  const userPage = `/user/${username}`;
   const userAt = `@${username}`;
 
   const elaborateTime = (createdTime: string) => {
