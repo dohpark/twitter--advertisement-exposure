@@ -9,6 +9,7 @@ interface PostProps {
 
 interface DeleteProps {
   id: number;
+  password: string;
 }
 
 export async function POST(req: Request) {
@@ -30,6 +31,15 @@ export async function POST(req: Request) {
 export async function PUT(req: Request) {
   const post: DeleteProps = await req.json();
   try {
+    const checkPassword = await prisma.post.findFirst({
+      where: {
+        id: post.id,
+        password: post.password,
+      },
+    });
+
+    if (!checkPassword) return NextResponse.json({ message: 'Wrong Password' }, { status: 401 });
+
     await prisma.post.delete({
       where: {
         id: post.id,
