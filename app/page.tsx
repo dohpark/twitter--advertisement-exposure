@@ -1,6 +1,6 @@
 import TopNav from '@/components/TopNav';
 import BottomNav from '@/components/Nav';
-import Feeds from '@/components/Feeds';
+import Feeds from '@/components/FeedList';
 
 export default function Page() {
   return (

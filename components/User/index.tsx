@@ -2,7 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import BottomNav from '@/components/Nav';
 import Arrow from '@/public/icons/arrow.svg';
-import UserFeeds from './UserFeeds';
+import UserFeedList from './UserFeedList';
 
 interface UserProps {
   user: string;
@@ -20,7 +20,7 @@ function User({ user, feedCount }: UserProps) {
           <span className="align-middle">{feedCount} 트윗</span>
         </div>
       </div>
-      <UserFeeds user={user} />
+      <UserFeedList user={user} />
       <BottomNav />
     </>
   );

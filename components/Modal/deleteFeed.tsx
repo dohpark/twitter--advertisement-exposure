@@ -16,7 +16,7 @@ function DeleteFeed({ closeModal, selectedFeedId, refetch }: DeleteFeedProps) {
   const handleClickDeleteFeed = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
-    await fetch('/api/post', {
+    await fetch('/api/feed', {
       method: 'PUT',
       body: JSON.stringify({
         id: selectedFeedId,

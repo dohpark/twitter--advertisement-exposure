@@ -23,21 +23,19 @@ function Tweet() {
   const handleCreateTweet = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
-    const data = await fetch('/api/post', {
+    await fetch('/api/feed', {
       method: 'POST',
       body: JSON.stringify({
         username,
         password,
         content,
       }),
-    });
-    const res = await data.json();
-
-    if (res.status === 200) {
-      router.push('/');
-    } else if (res.status === 500) {
-      alert(res.message);
-    }
+    })
+      .then((res) => {
+        if (res.status === 200) router.push('/');
+        return res.json();
+      })
+      .then((data) => alert(data.message));
   };
 
   return (

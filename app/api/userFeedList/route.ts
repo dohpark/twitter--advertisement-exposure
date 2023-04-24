@@ -31,7 +31,7 @@ export async function GET(req: Request) {
       },
     };
 
-    const feedList = await prisma.post.findMany({
+    const feedList = await prisma.feed.findMany({
       take: TAKE,
       orderBy: {
         id: 'desc',
@@ -44,8 +44,8 @@ export async function GET(req: Request) {
 
     const lastCursor = feedList.at(-1)?.id;
 
-    return NextResponse.json({ feedList, lastCursor });
+    return NextResponse.json({ feedList, lastCursor }, { status: 200 });
   } catch (e) {
-    return NextResponse.json({ status: 500, message: 'Error receiving feeds' });
+    return NextResponse.json({ message: 'Error receiving feeds' }, { status: 500 });
   }
 }

@@ -9,7 +9,7 @@ import Share from '@/public/icons/share.svg';
 import useModal from '@/hooks/useModal';
 import DeleteFeed from '@/components/Modal/deleteFeed';
 
-interface CardProps {
+interface FeedProps {
   id: number;
   username: string;
   content: string;
@@ -17,7 +17,7 @@ interface CardProps {
   refetch: () => void;
 }
 
-function Card({ id, username, createdAt, content, refetch }: CardProps) {
+function Feed({ id, username, createdAt, content, refetch }: FeedProps) {
   const userPage = `/user/${username}`;
   const userAt = `@${username}`;
 
@@ -68,4 +68,4 @@ function Card({ id, username, createdAt, content, refetch }: CardProps) {
   );
 }
 
-export default Card;
+export default Feed;

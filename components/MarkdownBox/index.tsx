@@ -41,7 +41,7 @@ function MarkdownBox({ value }: MarkdownBoxProps) {
           const wordArray: [ParagraphAndATagType, OptionType, string][] = paragraph.split(' ').map((el) => {
             if (el.startsWith('@')) {
               const username = el.slice(1, el.length);
-              return ['a', { href: `/${username}` }, `${el} `];
+              return ['a', { href: `/user/${username}` }, `${el} `];
             }
             return ['p', {}, `${el} `];
           });

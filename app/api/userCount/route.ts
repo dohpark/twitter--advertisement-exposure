@@ -18,7 +18,7 @@ export async function GET(req: Request) {
       if (key === 'user') paramMap[key] = value;
     });
 
-    const userFeedCount = await prisma.post.aggregate({
+    const feedCount = await prisma.feed.aggregate({
       where: {
         username: paramMap.user,
       },
@@ -27,8 +27,8 @@ export async function GET(req: Request) {
       },
     });
 
-    return NextResponse.json(userFeedCount._count.username);
+    return NextResponse.json({ feedCount: feedCount._count.username }, { status: 200 });
   } catch (e) {
-    return NextResponse.json({ status: 500, message: 'Error receiving feeds' });
+    return NextResponse.json({ message: 'Error receiving feeds' }, { status: 500 });
   }
 }
