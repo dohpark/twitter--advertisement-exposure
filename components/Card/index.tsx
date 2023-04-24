@@ -10,20 +10,22 @@ import useModal from '@/hooks/useModal';
 import DeleteFeed from '@/components/Modal/deleteFeed';
 
 interface CardProps {
+  id: number;
   username: string;
   content: string;
   createdAt: string;
+  refetch: () => void;
 }
 
-function Card({ username, createdAt, content }: CardProps) {
+function Card({ id, username, createdAt, content, refetch }: CardProps) {
   const userPage = `/user/${username}`;
   const userAt = `@${username}`;
 
   const [selectedFeedId, setSelectedFeedId] = useState(0);
   const { openModal, closeModal, ModalPortal } = useModal();
 
-  const handleOpenDeleteModal = (id: number) => {
-    setSelectedFeedId(id);
+  const handleOpenDeleteModal = (userId: number) => {
+    setSelectedFeedId(userId);
     openModal();
   };
 
@@ -54,13 +56,13 @@ function Card({ username, createdAt, content }: CardProps) {
         <button type="button" className="p-2 mr-2 active:bg-sky-100 rounded-full">
           <Image src={Share} height={18} width={18} alt="share post" className="fill-gray-600" />
         </button>
-        <button type="button" onClick={() => handleOpenDeleteModal(59)} className="p-2 active:bg-sky-100 rounded-full">
+        <button type="button" onClick={() => handleOpenDeleteModal(id)} className="p-2 active:bg-sky-100 rounded-full">
           <Image src={Trash} height={18} width={18} alt="delete post" />
         </button>
       </div>
 
       <ModalPortal>
-        <DeleteFeed closeModal={closeModal} selectedFeedId={selectedFeedId} />
+        <DeleteFeed closeModal={closeModal} selectedFeedId={selectedFeedId} refetch={refetch} />
       </ModalPortal>
     </article>
   );

@@ -31,7 +31,7 @@ function UserFeeds({ user }: UserFeedsProps) {
 
   const fetchFeeds = (cursor: string): Promise<FeedList> => getUserFeedLists(cursor);
 
-  const { data, isSuccess, fetchNextPage } = useInfiniteQuery({
+  const { data, isSuccess, fetchNextPage, refetch } = useInfiniteQuery({
     queryKey: ['userFeedList', user],
     queryFn: ({ pageParam = 0 }) => fetchFeeds(pageParam),
     getNextPageParam: (lastItem) => lastItem.lastCursor,
@@ -56,7 +56,7 @@ function UserFeeds({ user }: UserFeedsProps) {
       {isSuccess &&
         data.pages.map((page) =>
           page.feedList.map(({ id, username, content, createdAt }) => (
-            <Card key={id} username={username} content={content} createdAt={createdAt} />
+            <Card key={id} id={id} username={username} content={content} createdAt={createdAt} refetch={refetch} />
           ))
         )}
       <div ref={intersectionObserver} />
