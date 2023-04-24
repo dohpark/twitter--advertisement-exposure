@@ -12,6 +12,7 @@ export async function GET(req: Request) {
 
     const rawParams = req.url.split('?')[1];
     const paramsArray = rawParams.split('&');
+
     const paramMap: ParamMap = {
       cursor: 0,
       user: '',
@@ -28,15 +29,15 @@ export async function GET(req: Request) {
       cursor: {
         id: paramMap.cursor,
       },
-      where: {
-        username: paramMap.user,
-      },
     };
 
     const feedList = await prisma.post.findMany({
       take: TAKE,
       orderBy: {
         id: 'desc',
+      },
+      where: {
+        username: paramMap.user,
       },
       ...(paramMap.cursor !== 0 && pageCondition),
     });
