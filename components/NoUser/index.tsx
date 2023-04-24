@@ -13,7 +13,6 @@ function NoUser({ user }: NoUserProps) {
         <Link href="/" className="w-fit">
           <Image src={Arrow} height={20} width={20} alt="Back to Home" className="w-fit m-0" />
         </Link>
-        <div />
       </div>
       <div className="px-4 py-6  text-lg font-bold">{`@${user}`}</div>
       <div className="mx-10 p-5">
