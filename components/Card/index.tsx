@@ -2,9 +2,12 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
+import { useState } from 'react';
 import MarkdownBox from '@/components/MarkdownBox';
 import Trash from '@/public/icons/trash.svg';
 import Share from '@/public/icons/share.svg';
+import useModal from '@/hooks/useModal';
+import DeleteFeed from '@/components/Modal/deleteFeed';
 
 interface CardProps {
   username: string;
@@ -15,6 +18,14 @@ interface CardProps {
 function Card({ username, createdAt, content }: CardProps) {
   const userPage = `/user/${username}`;
   const userAt = `@${username}`;
+
+  const [selectedFeedId, setSelectedFeedId] = useState(0);
+  const { openModal, closeModal, ModalPortal } = useModal();
+
+  const handleOpenDeleteModal = (id: number) => {
+    setSelectedFeedId(id);
+    openModal();
+  };
 
   const elaborateTime = (createdTime: string) => {
     const dateObject = new Date(createdTime);
@@ -43,10 +54,14 @@ function Card({ username, createdAt, content }: CardProps) {
         <button type="button" className="p-2 mr-2 active:bg-sky-100 rounded-full">
           <Image src={Share} height={18} width={18} alt="share post" className="fill-gray-600" />
         </button>
-        <button type="button" className="p-2 active:bg-sky-100 rounded-full">
+        <button type="button" onClick={() => handleOpenDeleteModal(59)} className="p-2 active:bg-sky-100 rounded-full">
           <Image src={Trash} height={18} width={18} alt="delete post" />
         </button>
       </div>
+
+      <ModalPortal>
+        <DeleteFeed closeModal={closeModal} selectedFeedId={selectedFeedId} />
+      </ModalPortal>
     </article>
   );
 }

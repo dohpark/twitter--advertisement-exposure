@@ -5,7 +5,7 @@ import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { materialLight } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { darcula } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 interface MarkdownBoxProps {
   value: string;
@@ -23,7 +23,7 @@ function MarkdownBox({ value }: MarkdownBoxProps) {
             <SyntaxHighlighter
               {...props}
               children={String(children).replace(/\n$/, '')}
-              style={materialLight}
+              style={darcula}
               language={match[1]}
               PreTag="div"
             />
