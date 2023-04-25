@@ -33,7 +33,7 @@ function UserFeedList({ user }: UserFeedsProps) {
 
   const fetchFeeds = (cursor: string): Promise<FeedListPage> => getUserFeedLists(cursor);
 
-  const { data, isSuccess, fetchNextPage, refetch } = useInfiniteQuery({
+  const { data, isSuccess, fetchNextPage } = useInfiniteQuery({
     queryKey: ['userFeedList', user],
     queryFn: ({ pageParam = 0 }) => fetchFeeds(pageParam),
     getNextPageParam: (lastItem) => lastItem.lastCursor,
@@ -66,7 +66,7 @@ function UserFeedList({ user }: UserFeedsProps) {
               createdAt={createdAt}
               type={type}
               view={view}
-              refetch={refetch}
+              afterDeleteReturnHome={false}
             />
           ))
         )}

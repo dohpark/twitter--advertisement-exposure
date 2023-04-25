@@ -1,4 +1,4 @@
-import NoUser from '@/components/NoUser';
+import NotFound from '@/components/NotFound';
 import User from '@/components/User';
 
 interface PageProps {
@@ -20,7 +20,7 @@ export default async function Page({ params }: PageProps) {
 
   return (
     <div className="flex flex-col	h-full">
-      {!hasFeed && <NoUser user={user} />}
+      {!hasFeed && <NotFound type="user" target={user} />}
       {hasFeed && <User user={user} feedCount={feedCount} />}
     </div>
   );

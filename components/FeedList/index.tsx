@@ -29,7 +29,7 @@ function FeedList() {
 
   const fetchFeeds = (cursor: string): Promise<FeedListPage> => getFeedLists(cursor);
 
-  const { data, isSuccess, fetchNextPage, refetch } = useInfiniteQuery({
+  const { data, isSuccess, fetchNextPage } = useInfiniteQuery({
     queryKey: ['feedList'],
     queryFn: ({ pageParam = 0 }) => fetchFeeds(pageParam),
     getNextPageParam: (lastItem) => lastItem.lastCursor,
@@ -61,7 +61,7 @@ function FeedList() {
               view={view}
               content={content}
               createdAt={createdAt}
-              refetch={refetch}
+              afterDeleteReturnHome={false}
             />
           ))
         )}

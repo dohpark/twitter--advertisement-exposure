@@ -12,9 +12,9 @@ const useModal = () => {
   const modalRoot = document.getElementById('portal') as HTMLElement;
 
   useEffect(() => {
-    if (modalOpen) document.body.style.overflow = 'hidden';
+    if (modalOpen) window.document.body.style.overflow = 'hidden';
     return () => {
-      document.body.style.overflow = 'unset';
+      window.document.body.style.overflow = 'unset';
     };
   }, [modalOpen]);
 

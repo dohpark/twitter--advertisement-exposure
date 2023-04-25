@@ -1,37 +1,52 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import React, { useState } from 'react';
 
 interface DeleteFeedProps {
   closeModal: () => void;
   selectedFeedId: number;
-  refetch: () => void;
+  afterDeleteReturnHome: boolean;
 }
 
-function DeleteFeed({ closeModal, selectedFeedId, refetch }: DeleteFeedProps) {
+function DeleteFeed({ closeModal, selectedFeedId, afterDeleteReturnHome }: DeleteFeedProps) {
   const [password, setPassword] = useState('');
   const [isError, setIsError] = useState(false);
 
-  const handleSetPassword = (e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value);
-  const handleClickDeleteFeed = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
+  const router = useRouter();
 
-    await fetch('/api/feed', {
+  const handleSetPassword = (e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value);
+
+  const deleteFeed = async () => {
+    const data = await fetch('/api/feed', {
       method: 'PUT',
       body: JSON.stringify({
         id: selectedFeedId,
         password,
       }),
     }).then((res) => {
-      if (res.status === 200) {
-        refetch();
-        setIsError(false);
-        closeModal();
-      } else if (res.status === 401) {
+      if (res.status === 401) {
         setIsError(true);
       }
+      if (!res.ok) throw Error();
+      return res.json();
     });
+    return data;
   };
+
+  const queryClient = useQueryClient();
+  const { mutate: handleDeleteFeed } = useMutation({
+    mutationFn: () => deleteFeed(),
+    onSuccess: () => {
+      queryClient.invalidateQueries(['feedList']);
+      queryClient.invalidateQueries(['userFeedList']);
+      setIsError(false);
+      closeModal();
+      if (afterDeleteReturnHome) router.push('/');
+    },
+    onError: () => {},
+  });
 
   const handleClickCancelDelete = () => closeModal();
 
@@ -48,7 +63,7 @@ function DeleteFeed({ closeModal, selectedFeedId, refetch }: DeleteFeedProps) {
       <div className="flex flex-col">
         <button
           type="button"
-          onClick={handleClickDeleteFeed}
+          onClick={() => handleDeleteFeed()}
           className="rounded-2xl border border-gray-300 py-2 bg-red-500 text-white mb-3"
         >
           삭제

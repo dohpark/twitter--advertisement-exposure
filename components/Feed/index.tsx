@@ -16,10 +16,10 @@ interface FeedProps {
   type: 'user' | 'advertisement';
   view: number;
   createdAt: string;
-  refetch: () => void;
+  afterDeleteReturnHome: boolean;
 }
 
-function Feed({ id, username, createdAt, content, type, view, refetch }: FeedProps) {
+function Feed({ id, username, createdAt, content, type, view, afterDeleteReturnHome }: FeedProps) {
   const userPage = `/user/${username}`;
   const userAt = `@${username}`;
 
@@ -98,7 +98,11 @@ function Feed({ id, username, createdAt, content, type, view, refetch }: FeedPro
       </div>
 
       <ModalPortal>
-        <DeleteFeed closeModal={closeModal} selectedFeedId={selectedFeedId} refetch={refetch} />
+        <DeleteFeed
+          closeModal={closeModal}
+          selectedFeedId={selectedFeedId}
+          afterDeleteReturnHome={afterDeleteReturnHome}
+        />
       </ModalPortal>
     </article>
   );
