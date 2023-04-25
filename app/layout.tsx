@@ -1,7 +1,5 @@
 import '@/styles/globals.css';
-import Image from 'next/image';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import TwitterIcon from '@/public/icons/twitter-icon.svg';
 import Providers from '@/app/providers';
 
 export const metadata = {
@@ -17,23 +15,12 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en">
       <body>
-        <div className="flex">
-          <div className="h-screen w-screen xs:w-0 relative">
-            <Image
-              src={TwitterIcon}
-              height={96}
-              width={96}
-              alt="Welcome to Twitter"
-              className="absolute m-auto inset-0"
-            />
-          </div>
-          <div className="max-w-40 max-h-screen w-full border border-gray-200 relative">
-            <Providers>
-              <div id="portal" />
-              {children}
-              <ReactQueryDevtools initialIsOpen={false} />
-            </Providers>
-          </div>
+        <div className="max-w-40 h-screen w-full border border-gray-200 relative mx-auto">
+          <Providers>
+            <div id="portal" />
+            {children}
+            <ReactQueryDevtools initialIsOpen={false} />
+          </Providers>
         </div>
       </body>
     </html>
