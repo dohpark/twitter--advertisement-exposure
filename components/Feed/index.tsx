@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import MarkdownBox from '@/components/MarkdownBox';
 import Trash from '@/public/icons/trash.svg';
 import Share from '@/public/icons/share.svg';
@@ -13,11 +13,13 @@ interface FeedProps {
   id: number;
   username: string;
   content: string;
+  type: 'user' | 'advertisement';
+  view: number;
   createdAt: string;
   refetch: () => void;
 }
 
-function Feed({ id, username, createdAt, content, refetch }: FeedProps) {
+function Feed({ id, username, createdAt, content, type, view, refetch }: FeedProps) {
   const userPage = `/user/${username}`;
   const userAt = `@${username}`;
 
@@ -32,25 +34,59 @@ function Feed({ id, username, createdAt, content, refetch }: FeedProps) {
   const elaborateTime = (createdTime: string) => {
     const dateObject = new Date(createdTime);
     const year = dateObject.getFullYear();
-    const month = dateObject.getMonth();
+    const month = dateObject.getMonth() + 1;
     const date = dateObject.getDate();
     const hour = dateObject.getHours();
     const minute = dateObject.getMinutes();
 
-    const type = +hour >= 12 ? '오후' : '오전';
+    const hourType = +hour >= 12 ? '오후' : '오전';
+    const hourFormat = +hour % 12 === 0 ? 12 : +hour % 12;
 
-    return `${type} ${+hour % 12}:${minute} · ${year}년 ${month}월 ${date}일`;
+    return `${hourType} ${hourFormat.toString().padStart(2, '0')}:${minute
+      .toString()
+      .padStart(2, '0')} · ${year}년 ${month}월 ${date}일`;
   };
   const elaboratedTime = elaborateTime(createdAt);
 
+  const increaseView = async (targetId: number) => {
+    await fetch(`/api/feedView`, {
+      method: 'PATCH',
+      body: JSON.stringify({
+        targetId,
+      }),
+    });
+  };
+
+  const intersectionObserver = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          increaseView(id);
+          observer.disconnect();
+        }
+      },
+      {
+        threshold: 1,
+      }
+    );
+
+    if (intersectionObserver.current) observer.observe(intersectionObserver.current);
+
+    return () => observer.disconnect();
+  }, [intersectionObserver, id]);
+
   return (
-    <article className="px-4 py-2">
+    <article ref={intersectionObserver} className="px-4 py-2">
+      {type === 'advertisement' && <p className="font-bold text-blue-500">광고</p>}
       <Link href={userPage} className="text-sm font-bold active:underline">
         {userAt}
       </Link>
       <MarkdownBox value={content} />
       <div className="mt-2 mb-4 text-sm text-gray-500">
         <time dateTime={createdAt}>{elaboratedTime}</time>
+        <p>조회수 {view}</p>
       </div>
       <div>
         <button type="button" className="p-2 mr-2 active:bg-sky-100 rounded-full">

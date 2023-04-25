@@ -20,29 +20,55 @@ export async function GET(req: Request) {
       orderBy: {
         id: 'desc',
       },
+      where: {
+        type: 'user',
+      },
+      select: {
+        id: true,
+        type: true,
+        username: true,
+        content: true,
+        view: true,
+        createdAt: true,
+      },
       ...(cursor !== 0 && pageCondition),
     });
 
-    const feedListWithAds: { id: number; username: string; password: string; content: string; createdAt: Date }[] = [];
+    const advList = await prisma.feed.findMany({
+      take: 2,
+      orderBy: {
+        view: 'asc',
+      },
+      where: {
+        type: 'advertisement',
+      },
+      select: {
+        id: true,
+        type: true,
+        username: true,
+        content: true,
+        view: true,
+        createdAt: true,
+      },
+    });
+
+    type FeedListWithAds =
+      | {
+          id: number;
+          type: string;
+          username: string;
+          content: string;
+          createdAt: Date;
+          view: number;
+        }
+      | undefined;
+
+    const feedListWithAds: FeedListWithAds[] = [];
 
     feedList.forEach((post, index) => {
+      if (cursor !== 0 && index === 0) feedListWithAds.push(advList.pop());
+      if (cursor !== 0 && index === 3) feedListWithAds.push(advList.pop());
       feedListWithAds.push(post);
-      if (index === 3)
-        feedListWithAds.push({
-          id: 232,
-          username: 'advertise',
-          password: '3131',
-          content: 'ad',
-          createdAt: new Date('2023-04-22T12:35:54.733Z'),
-        });
-      if (index === 7)
-        feedListWithAds.push({
-          id: 2872,
-          username: 'advertise',
-          password: '3131',
-          content: 'ad',
-          createdAt: new Date('2023-04-22T12:35:54.733Z'),
-        });
     });
 
     const lastCursor = feedList.at(-1)?.id;

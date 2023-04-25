@@ -12,6 +12,8 @@ interface FeedItems {
   id: number;
   username: string;
   content: string;
+  type: 'user' | 'advertisement';
+  view: number;
   createdAt: string;
 }
 
@@ -55,8 +57,17 @@ function UserFeedList({ user }: UserFeedsProps) {
       <div className="p-3 text-lg font-bold">@{user}</div>
       {isSuccess &&
         data.pages.map((page) =>
-          page.feedList.map(({ id, username, content, createdAt }) => (
-            <Feed key={id} id={id} username={username} content={content} createdAt={createdAt} refetch={refetch} />
+          page.feedList.map(({ id, username, content, createdAt, type, view }) => (
+            <Feed
+              key={id}
+              id={id}
+              username={username}
+              content={content}
+              createdAt={createdAt}
+              type={type}
+              view={view}
+              refetch={refetch}
+            />
           ))
         )}
       <div ref={intersectionObserver} />

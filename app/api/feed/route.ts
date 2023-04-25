@@ -17,9 +17,11 @@ export async function POST(req: Request) {
   try {
     await prisma.feed.create({
       data: {
+        type: 'user',
         username: feed.username,
         password: feed.password,
         content: feed.content,
+        view: 0,
       },
     });
     return NextResponse.json({ message: 'New post created' }, { status: 200 });

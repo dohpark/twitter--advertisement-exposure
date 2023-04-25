@@ -8,6 +8,8 @@ interface FeedItems {
   id: number;
   username: string;
   content: string;
+  type: 'user' | 'advertisement';
+  view: number;
   createdAt: string;
 }
 
@@ -50,8 +52,17 @@ function FeedList() {
     <main className="overflow-y-scroll grow divide-y divide-gray-200">
       {isSuccess &&
         data.pages.map((page) =>
-          page.feedList.map(({ id, username, content, createdAt }) => (
-            <Feed key={id} id={id} username={username} content={content} createdAt={createdAt} refetch={refetch} />
+          page.feedList.map(({ id, username, content, type, view, createdAt }) => (
+            <Feed
+              key={id}
+              id={id}
+              username={username}
+              type={type}
+              view={view}
+              content={content}
+              createdAt={createdAt}
+              refetch={refetch}
+            />
           ))
         )}
       <div ref={intersectionObserver} />
