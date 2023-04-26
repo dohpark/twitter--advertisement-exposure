@@ -26,9 +26,30 @@ function Feed({ id, username, createdAt, content, type, view, afterDeleteReturnH
   const [selectedFeedId, setSelectedFeedId] = useState(0);
   const { openModal, closeModal, ModalPortal } = useModal();
 
-  const handleOpenDeleteModal = (userId: number) => {
-    setSelectedFeedId(userId);
+  const handleOpenDeleteModal = (feedId: number) => {
+    setSelectedFeedId(feedId);
     openModal();
+  };
+
+  const handleCopyFeedLink = (feedId: number) => {
+    const { origin } = window.location;
+    const copyLink = `${origin}/feed/${feedId}`;
+
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(copyLink);
+    } else {
+      const textArea = document.createElement('textarea');
+      textArea.value = copyLink;
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+      try {
+        document.execCommand('copy');
+      } catch (err) {
+        console.error('Unable to copy to clipboard', err);
+      }
+      document.body.removeChild(textArea);
+    }
   };
 
   const elaborateTime = (createdTime: string) => {
@@ -89,7 +110,11 @@ function Feed({ id, username, createdAt, content, type, view, afterDeleteReturnH
         <p>조회수 {view}</p>
       </div>
       <div>
-        <button type="button" className="p-2 mr-2 active:bg-sky-100 rounded-full">
+        <button
+          type="button"
+          onClick={() => handleCopyFeedLink(id)}
+          className="p-2 mr-2 active:bg-sky-100 rounded-full"
+        >
           <Image src={Share} height={18} width={18} alt="share post" className="fill-gray-600" />
         </button>
         <button type="button" onClick={() => handleOpenDeleteModal(id)} className="p-2 active:bg-sky-100 rounded-full">

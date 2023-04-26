@@ -11,12 +11,26 @@ export default async function Page({ params }: PageProps) {
   const { hasFeed } = await fetch(`http://localhost:3000/api/userCheck?user=${user}`, {
     method: 'GET',
     cache: 'no-store',
-  }).then((res) => res.json());
+  })
+    .then((res) => res.json())
+    .then((res) => {
+      if (res.error) {
+        throw new Error(res.error);
+      }
+      return res;
+    });
 
   const { feedCount } = await fetch(`http://localhost:3000/api/userCount?user=${user}`, {
     method: 'GET',
     cache: 'no-store',
-  }).then((res) => res.json());
+  })
+    .then((res) => res.json())
+    .then((res) => {
+      if (res.error) {
+        throw new Error(res.error);
+      }
+      return res;
+    });
 
   return (
     <div className="flex flex-col	h-full">
