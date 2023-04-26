@@ -38,17 +38,17 @@ function Feed({ id, username, createdAt, content, type, view, afterDeleteReturnH
     if (navigator.clipboard) {
       navigator.clipboard.writeText(copyLink);
     } else {
-      const textArea = document.createElement('textarea');
+      const textArea = window.document.createElement('textarea');
       textArea.value = copyLink;
-      document.body.appendChild(textArea);
+      window.document.body.appendChild(textArea);
       textArea.focus();
       textArea.select();
       try {
-        document.execCommand('copy');
+        window.document.execCommand('copy');
       } catch (err) {
         console.error('Unable to copy to clipboard', err);
       }
-      document.body.removeChild(textArea);
+      window.document.body.removeChild(textArea);
     }
   };
 
