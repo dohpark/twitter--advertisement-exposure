@@ -9,6 +9,14 @@ interface PageProps {
   params: { id: string };
 }
 
+export const metadata = {
+  title: 'Twitter',
+  openGraph: {
+    title: '넘블 트위터',
+    description: '개발자를 위한 트위터',
+  },
+};
+
 export default async function Page({ params }: PageProps) {
   const { id } = params;
 
