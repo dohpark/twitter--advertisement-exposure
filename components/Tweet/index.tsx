@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Arrow from '@/public/icons/arrow.svg';
 import Link from 'next/link';
@@ -12,6 +12,12 @@ function Tweet() {
   const [password, setPassword] = useState('');
   const [isWrite, setIsWrite] = useState(true);
   const [content, setContent] = useState('');
+  const [isTweet, setIsTweet] = useState(false);
+
+  useEffect(() => {
+    if (username.length && password.length && content.length) setIsTweet(true);
+    else setIsTweet(false);
+  }, [username, password, content]);
 
   const router = useRouter();
 
@@ -47,7 +53,8 @@ function Tweet() {
         <button
           type="button"
           onClick={handleCreateTweet}
-          className="bg-sky-500 px-3 py-1 rounded-3xl text-white text-sm active:bg-sky-600"
+          disabled={!isTweet}
+          className="bg-sky-500 px-3 py-1 rounded-3xl text-white text-sm active:bg-sky-600 disabled:bg-gray-300"
         >
           트윗하기
         </button>
